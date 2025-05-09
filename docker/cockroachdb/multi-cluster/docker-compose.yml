@@ -1,0 +1,56 @@
+services:
+  cockroachdb1:
+    image: cockroachdb/cockroach:v22.1.22
+    container_name: cockroachdb1
+    hostname: cockroachdb1
+    command: start --insecure --join=cockroachdb1,cockroachdb2,cockroachdb3 --advertise-addr=cockroachdb1
+    ports:
+      - "26257:26257"
+      - "8080:8080"
+    volumes:
+      - cockroach-data1:/cockroach/cockroach-data
+    networks:
+      - cockroach-net
+
+  cockroachdb2:
+    image: cockroachdb/cockroach:v22.1.22
+    container_name: cockroachdb2
+    hostname: cockroachdb2
+    command: start --insecure --join=cockroachdb1,cockroachdb2,cockroachdb3 --advertise-addr=cockroachdb2
+    volumes:
+      - cockroach-data2:/cockroach/cockroach-data
+    networks:
+      - cockroach-net
+
+  cockroachdb3:
+    image: cockroachdb/cockroach:v22.1.22
+    container_name: cockroachdb3
+    hostname: cockroachdb3
+    command: start --insecure --join=cockroachdb1,cockroachdb2,cockroachdb3 --advertise-addr=cockroachdb3
+    volumes:
+      - cockroach-data3:/cockroach/cockroach-data
+    networks:
+      - cockroach-net
+
+  cockroach-init:
+    image: cockroachdb/cockroach:v22.1.22
+    depends_on:
+      cockroachdb1:
+        condition: service_started
+    networks:
+      - cockroach-net
+    entrypoint: >
+      /bin/bash -c "
+      echo 'Initializing CockroachDB cluster...' &&
+      sleep 5 &&
+      cockroach init --insecure --host=cockroachdb1 &&
+      cockroach sql --insecure --host=cockroachdb1 --execute='CREATE DATABASE IF NOT EXISTS gamesdb;'"
+
+volumes:
+  cockroach-data1:
+  cockroach-data2:
+  cockroach-data3:
+
+networks:
+  cockroach-net:
+    driver: bridge

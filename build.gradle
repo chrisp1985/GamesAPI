@@ -1,0 +1,83 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.4.5'
+	id 'io.spring.dependency-management' version '1.1.7'
+	id 'com.google.cloud.tools.jib' version '3.4.0'
+}
+
+group = 'com.chrisp1985'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+sourceSets {
+	integrationTest {
+		compileClasspath += sourceSets.main.output + sourceSets.test.output
+		runtimeClasspath += sourceSets.main.output + sourceSets.test.output
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.boot:spring-boot-starter-cache:3.2.3'
+	implementation 'org.springframework.boot:spring-boot-devtools'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-aop'
+	implementation 'com.github.ben-manes.caffeine:caffeine:3.2.0'
+	implementation 'org.flywaydb:flyway-core'
+	implementation 'org.flywaydb:flyway-database-postgresql'
+	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+	runtimeOnly 'org.postgresql:postgresql'
+	testImplementation 'org.testcontainers:junit-jupiter'
+	testImplementation 'org.testcontainers:postgresql'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	implementation group: 'jakarta.persistence', name: 'jakarta.persistence-api', version: '3.2.0'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.mapstruct:mapstruct:1.6.3'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
+
+	integrationTestImplementation 'org.springframework.boot:spring-boot-starter-test'
+	integrationTestImplementation 'org.springframework.boot:spring-boot-testcontainers'
+	integrationTestImplementation 'org.springframework.boot:spring-boot-starter-actuator'
+	integrationTestImplementation 'org.springframework.boot:spring-boot-starter-cache:3.2.3'
+	integrationTestImplementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+	integrationTestImplementation 'org.springframework.boot:spring-boot-starter-web'
+	integrationTestImplementation 'org.springframework.boot:spring-boot-starter-aop'
+	integrationTestImplementation 'org.testcontainers:cockroachdb'
+	integrationTestImplementation 'org.testcontainers:junit-jupiter'
+	integrationTestRuntimeOnly 'org.postgresql:postgresql'
+	integrationTestImplementation 'com.github.ben-manes.caffeine:caffeine:3.2.0'
+	integrationTestImplementation 'org.flywaydb:flyway-core'
+	integrationTestImplementation 'org.flywaydb:flyway-database-postgresql'
+}
+
+jib {
+	to {
+		image = 'chriseparsons/cockroachdemo:latest'
+	}
+	container {
+		ports = ['9092']
+		jvmFlags = ['-Xms512m', '-Xmx1024m']
+	}
+}
+
+tasks.withType(JavaCompile) {
+	options.annotationProcessorPath = configurations.annotationProcessor
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

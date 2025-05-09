@@ -1,0 +1,26 @@
+services:
+  cockroachdb:
+    image: cockroachdb/cockroach:v22.1.22
+    container_name: cockroachdb
+    command: start-single-node --insecure
+    ports:
+      - "26257:26257"
+      - "8080:8080"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health?ready=1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  cockroachdb-init:
+    image: cockroachdb/cockroach:v22.1.22
+    depends_on:
+      cockroachdb:
+        condition: service_healthy
+    entrypoint: >
+      /bin/bash -c "
+      echo 'Waiting for CockroachDB to be ready...' &&
+      sleep 5 &&
+      cockroach sql --insecure --host=cockroachdb --execute='CREATE DATABASE IF NOT EXISTS gamesdb;'
+      "

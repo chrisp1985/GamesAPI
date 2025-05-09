@@ -1,0 +1,27 @@
+server:
+  port: 9092
+
+spring:
+  application:
+    name: cockroachdemo
+
+  datasource:
+    url: jdbc:postgresql://localhost:26257/gamesdb
+    username: root
+    password: root
+
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+
+  cache:
+    type: caffeine
+    cache-names:
+      - gamesCache
+    caffeine:
+      spec: maximumSize=100,expireAfterWrite=10m
