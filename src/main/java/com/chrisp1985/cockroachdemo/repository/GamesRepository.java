@@ -1,9 +1,8 @@
-package com.chrisp1985.cockroachdemo.service;
+package com.chrisp1985.cockroachdemo.repository;
 
-import com.chrisp1985.cockroachdemo.data.Game;
-import com.chrisp1985.cockroachdemo.data.GameConsoleDto;
-import com.chrisp1985.cockroachdemo.data.GameDto;
-import com.chrisp1985.cockroachdemo.data.LowestRankedGameDto;
+import com.chrisp1985.cockroachdemo.model.Game;
+import com.chrisp1985.cockroachdemo.model.GameConsoleDto;
+import com.chrisp1985.cockroachdemo.model.LowestRankedGameDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;

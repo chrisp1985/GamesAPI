@@ -1,4 +1,4 @@
-package com.chrisp1985.cockroachdemo.data;
+package com.chrisp1985.cockroachdemo.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

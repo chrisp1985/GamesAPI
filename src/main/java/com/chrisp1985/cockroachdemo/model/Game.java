@@ -1,6 +1,5 @@
-package com.chrisp1985.cockroachdemo.data;
+package com.chrisp1985.cockroachdemo.model;
 
-import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

@@ -1,8 +1,8 @@
 package com.chrisp1985.cockroachdemo.controller;
 
-import com.chrisp1985.cockroachdemo.data.GameConsoleDto;
-import com.chrisp1985.cockroachdemo.data.GameDto;
-import com.chrisp1985.cockroachdemo.data.LowestRankedGameDto;
+import com.chrisp1985.cockroachdemo.model.GameConsoleDto;
+import com.chrisp1985.cockroachdemo.model.GameDto;
+import com.chrisp1985.cockroachdemo.model.LowestRankedGameDto;
 import com.chrisp1985.cockroachdemo.service.GamesService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;

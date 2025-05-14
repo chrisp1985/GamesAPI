@@ -1,9 +1,10 @@
 package com.chrisp1985.cockroachdemo.service;
 
 import com.chrisp1985.cockroachdemo.configuration.GameMapper;
-import com.chrisp1985.cockroachdemo.data.GameConsoleDto;
-import com.chrisp1985.cockroachdemo.data.GameDto;
-import com.chrisp1985.cockroachdemo.data.LowestRankedGameDto;
+import com.chrisp1985.cockroachdemo.model.GameConsoleDto;
+import com.chrisp1985.cockroachdemo.model.GameDto;
+import com.chrisp1985.cockroachdemo.model.LowestRankedGameDto;
+import com.chrisp1985.cockroachdemo.repository.GamesRepository;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;

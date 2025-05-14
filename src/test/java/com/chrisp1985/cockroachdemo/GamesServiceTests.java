@@ -1,17 +1,15 @@
 package com.chrisp1985.cockroachdemo;
 
 import com.chrisp1985.cockroachdemo.configuration.GameMapper;
-import com.chrisp1985.cockroachdemo.data.Game;
-import com.chrisp1985.cockroachdemo.data.GameDto;
-import com.chrisp1985.cockroachdemo.data.LowestRankedGameDto;
-import com.chrisp1985.cockroachdemo.service.GamesRepository;
+import com.chrisp1985.cockroachdemo.model.Game;
+import com.chrisp1985.cockroachdemo.model.GameDto;
+import com.chrisp1985.cockroachdemo.model.LowestRankedGameDto;
+import com.chrisp1985.cockroachdemo.repository.GamesRepository;
 import com.chrisp1985.cockroachdemo.service.GamesService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
